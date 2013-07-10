@@ -1,0 +1,13 @@
+{
+	"name" : "device-events",
+	"dependencies" : {
+		"connect-mobile-detection": "0.0.5"
+	},
+	"devDependencies" : {
+		"tape": "~1.0.4"
+	},
+	"main" : "./device-do.js",
+	"scripts": {
+    "test": "tap test/*.js"
+  },
+}
