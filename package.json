@@ -4,10 +4,11 @@
 		"connect-mobile-detection": "0.0.5"
 	},
 	"devDependencies" : {
-		"tape": "~1.0.4"
+		"tape": "~1.0.4",
+		"sinon": "~1.7.2"
 	},
-	"main" : "./device-do.js",
+	"main" : "./device-events.js",
 	"scripts": {
-    "test": "tap test/*.js"
-  },
+    "test": "tape test/*.js"
+  }
 }
