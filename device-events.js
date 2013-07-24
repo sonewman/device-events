@@ -9,7 +9,7 @@ var inherits = require('util').inherits
   , detect = require('connect-mobile-detection')()
   , eventBindMethods = ['on', 'addListener', 'once']
   , _slice = [].slice
-  , devices = ['phone', 'tablet', 'mobile', 'computer']
+  , devices = ['phone', 'tablet', 'mobile', 'computer', 'full', 'terminal']
 ;
 
 function de (req, res, opt) {
@@ -37,12 +37,18 @@ DeviceEvents.prototype.respond = function (req, res, opt) {
   detect(req, res, next);
   matched = false;
 
-  devices.map(function (device) {
+  devices.forEach(function (device) {
     this[device] = req[device] || false;
+    if (device === 'tablet' && req[device]) {
+      this.full = req.full = true;
+    }
     if (req[device]) matched = true;
   }, this);
 
   this.computer = req.computer = !matched ? true : false;
+  this.full = req.full = !matched ? true : false;
+  this.terminal = req.terminal = /libcurl/.test(req.headers['user-agent']) || false;
+
   this.responded = true;
   this._checkStatus();
   return this;
@@ -78,10 +84,10 @@ DeviceEvents.prototype._checkStatus = function () {
 //  monkey patch events - this will prob be added to x-emitter
 eventBindMethods.forEach(function (methodName) {
   DeviceEvents.prototype[methodName] = function (name, callback /*, arguments */) {
-    console.log(this.responded, this._devices)
+    // console.log(this.responded, this._devices)
     if (this.responded && this._devices) {
       ((this._devices.indexOf(name) > -1) && typeof callback == 'function') 
-        && callback.apply(this, _slice.call(arguments, 2));
+        && callback.apply(this, [this.req, this.res].concat(_slice.call(arguments, 2)));
     }
     EE.prototype[methodName].apply(this, _slice.call(arguments));
     return this;

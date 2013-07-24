@@ -1,14 +1,15 @@
 {
-	"name" : "device-events",
-	"dependencies" : {
-		"connect-mobile-detection": "0.0.5"
-	},
-	"devDependencies" : {
-		"tape": "~1.0.4",
-		"sinon": "~1.7.2"
-	},
-	"main" : "./device-events.js",
-	"scripts": {
+  "name" : "device-events",
+  "dependencies" : {
+    "connect-mobile-detection": "0.0.5"
+  },
+  "devDependencies" : {
+    "tape": "~1.0.4",
+    "sinon": "~1.7.2"
+  },
+  "main" : "./device-events.js",
+  "scripts": {
     "test": "tape test/*.js"
-  }
+  },
+  "version" : "0.0.1"
 }
